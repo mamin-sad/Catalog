@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Каталог композиций</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="wrap header__inner">
+      <a class="brand" href="#/">
+        <span class="brand__dot"></span>
+        <img class="brand__logo" src="./images/logo.svg" alt="Мамин Сад" />
+        <span class="brand__text">Мамин Сад - Каталог</span>
+      </a>
+
+      <nav class="nav">
+        <a class="nav__link" data-category="all" href="#/">Все разделы</a>
+        <a class="nav__link" data-category="bouquets" href="#/category/bouquets">Букеты</a>
+        <a class="nav__link" data-category="winter" href="#/category/winter">Зимние композиции</a>
+        <a class="nav__link" data-category="baskets" href="#/category/baskets">Корзинки</a>
+        <a class="nav__link" data-category="accessories" href="#/category/accessories">Аксессуары</a>
+        <a class="nav__link" data-category="postcards" href="#/category/postcards">Открытки</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <div class="layout">
+      <!-- left: каталог -->
+      <section class="catalog">
+        <section id="grid" class="grid" aria-label="Каталог"></section>
+      </section>
+
+      <!-- right: фильтры -->
+      <aside class="sidebar" aria-label="Фильтры">
+        <section class="panel" aria-label="Фильтры">
+          <div class="panel__row panel__row--stack">
+            <div class="chipset" role="group" aria-label="Фильтр по цене">
+              <button class="chip" data-price="1500">до 1 500 ₽</button>
+              <button class="chip" data-price="2000">до 2 000 ₽</button>
+              <button class="chip" data-price="3000">до 3 000 ₽</button>
+              <button class="chip" data-price="5000">до 5 000 ₽</button>
+              <button class="chip chip--ghost" data-price="all">любая цена</button>
+            </div>
+
+            <div class="search search--full">
+              <input id="searchInput" class="search__input" placeholder="Поиск по названию…" />
+            </div>
+          </div>
+
+          <div class="panel__meta">
+            <span id="resultMeta" class="muted"></span>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <!-- main card -->
+    <dialog id="productDialog" class="dialog">
+      <div class="dialog__head">
+        <div>
+          <h2 id="dlgTitle" class="dialog__title"></h2>
+          <p id="dlgSubtitle" class="dialog__subtitle muted"></p>
+        </div>
+        <button id="dlgClose" class="iconbtn" aria-label="Закрыть">✕</button>
+      </div>
+
+      <div class="dialog__body">
+        <div class="gallery">
+          <img id="dlgMainImg" class="gallery__main" alt="" />
+          <div id="dlgThumbs" class="gallery__thumbs"></div>
+        </div>
+
+        <div class="details">
+          <div class="pricebox">
+            <span class="pricebox__label muted">Цена</span>
+            <span id="dlgPrice" class="pricebox__value"></span>
+          </div>
+
+          <!-- order and contacts-->
+          <div class="orderbox">
+            <div class="orderbox__row">
+              <a id="dlgOrderLink" class="btn" target="_blank" rel="noopener">Оформить заказ</a>
+              <button id="dlgCopyLink" class="btn btn--ghost" type="button">Скопировать ссылку</button>
+            </div>
+            <div class="orderbox__row orderbox__row--links">
+              <a id="dlgPhone" class="contact-link contact-link--phone" data-icon="TEL" href="#" rel="noopener">Телефон</a>
+              <a id="dlgTelegram" class="contact-link contact-link--telegram" data-icon="TG" href="#" target="_blank" rel="noopener">Telegram</a>
+              <a id="dlgInstagram" class="contact-link contact-link--instagram" data-icon="IG" href="#" target="_blank" rel="noopener">Instagram</a>
+              <a id="dlgWhatsapp" class="contact-link contact-link--whatsapp" data-icon="WA" href="#" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+
+          <div class="block">
+            <h3 class="block__title">Описание композиции</h3>
+            <p id="dlgDesc" class="block__text"></p>
+          </div>
+
+          <div class="block">
+            <h3 class="block__title">Состав</h3>
+            <ul id="dlgItems" class="list"></ul>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  </main>
+
+<footer class="footer">
+  <div class="wrap footer__inner footer__grid">
+
+    <!-- left paty -->
+    <div class="footer__block">
+      <div class="muted">© Мамин Сад — Каталог</div>
+      <div class="muted" id="actualTime">Актуально на сегодня</div>
+    </div>
+
+    <!-- contcact -->
+    <div class="footer__block">
+      <div class="footer__title">Контакты</div>
+
+      <a class="footer__link" href="tel:+79274719121">
+        📞 +7 927 471-91-21
+      </a>
+
+      <a class="footer__link" href="https://t.me/mam_insad_me" target="_blank">
+        💬 Telegram
+      </a>
+
+      <a class="footer__link" href="https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr" target="_blank">
+        📷 Instagram
+      </a>
+
+      <a class="footer__link" href="https://wa.me/message/QA4UW2CU7JN7O1" target="_blank">
+        💚 WhatsApp
+      </a>
+
+      <a class="footer__link" href = "https://max.ru/id163604335366_biz" target = "_blank"> 
+        🇷🇺 MaxMessanger
+      </a>
+
+      <div class="muted footer__address">
+        📍 Казань, Сибирский тракт 11/1
+      </div>
+    </div>
+
+    <!-- ya mapsa -->
+    <div class="footer__block footer__map">
+        <a
+          href="https://yandex.ru/maps/?pt=49.182644,55.806980&z=16&l=map"
+          target="_blank"
+          class="footer__map-link"
+          title="Открыть в Яндекс Картах">
+
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?ll=49.183023%2C55.806942&z=16&pt=49.182644,55.806980,pm2rdm"
+            width="100%"
+            height="180"
+            frameborder="0"
+            loading="lazy">
+          </iframe>
+
+        </a>
+
+    </div>
+
+  </div>
+</footer>
+
+
+  <script src="./js/app.js"></script>
+  <script>
+  function updateActualTime() {
+    const el = document.getElementById("actualTime");
+    if (!el) return;
+
+    const now = new Date();
+    const date = now.toLocaleDateString("ru-RU", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    });
+
+    const time = now.toLocaleTimeString("ru-RU", {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+
+    el.textContent = `Актуально на ${date}, ${time}`;
+  }
+
+  updateActualTime();
+  setInterval(updateActualTime, 60000); //upd evr min
+</script>
+
+</body>
+</html>
