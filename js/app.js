@@ -245,22 +245,21 @@ function openProduct(productId){
     dlgThumbs.innerHTML = `<div class="muted">Фотографии пока не добавлены.</div>`;
   }
 
-  // ссылки заказа/контактов (ВСЕГДА новые контакты)
+  // ссылки заказа/контактов 
   const shareUrl = buildProductShareUrl(p.id);
   const orderMessage = buildOrderMessage(shareUrl);
 
-  // кнопка заказа ведёт на WhatsApp (твой готовый wa.me/message)
-  // + добавляем текст в буфер через копирование ссылки (у тебя уже есть)
+  // кнопка заказа ведёт на WhatsApp 
   dlgOrderLink.href = buildMaxMessengerUrl(p)
   //dlgOrderLink.href = buildWhatsAppUrl(CONTACTS.phone, orderMessage);
   dlgOrderLink.textContent = "Оформить заказ";
 
-  // Телефон (кликабельный tel:)
+  // Телефон
   dlgPhone.textContent = "Позвонить";
   dlgPhone.href = `tel:${CONTACTS.phone.replace(/\s/g, "")}`;
   dlgPhone.style.display = "inline-flex";
 
-  // Instagram (кликабельный)
+  // Instagram
   dlgInstagram.textContent = "Instagram";
   dlgInstagram.href = CONTACTS.instagram;
   dlgInstagram.style.display = "inline-flex";
@@ -270,9 +269,6 @@ function openProduct(productId){
     dlgWhatsapp.href = buildWhatsAppUrl(CONTACTS.phone, orderMessage);
     dlgWhatsapp.style.display = "inline-flex";
   }
-
-  // Если у тебя в HTML есть кнопка/ссылка на Telegram — заполним тоже.
-  // Если элемента нет — просто пропустим.
   if (dlgTelegram) {
     dlgTelegram.textContent = "Telegram";
     dlgTelegram.href = buildTelegramUrl(CONTACTS.telegram, orderMessage);
@@ -286,7 +282,7 @@ function openProduct(productId){
 function closeDialog(){
   if(dlg.open) dlg.close();
 
-  // если закрыли карточку — возвращаемся на список/категорию
+  // если закрыл карточку — возвращаемся на список/категорию
   if(location.hash.startsWith("#/product/")){
     location.hash = "#/";
   }
