@@ -676,3 +676,40 @@ body{
     font-weight: 700;
   }
 }
+/* new */
+
+/* телефоны */
+@media (max-width: 560px){
+  .grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .card{
+    grid-column: auto;
+  }
+
+  /* картинка чуть “поуже” чтобы больше карточки было видно */
+  .card__img,
+  .placeholder{
+    aspect-ratio: 4 / 3;
+  }
+
+  .card__title{
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .card__price{
+    font-size: 13px;
+    font-weight: 900;
+  }
+}
+
+/* большие телефоны/небольшие планшеты — 3 в ряд (не мелко, но компактно) */
+@media (min-width: 561px) and (max-width: 980px){
+  .grid{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .card{ grid-column: auto; }
+}
