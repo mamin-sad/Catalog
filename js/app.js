@@ -7,6 +7,7 @@ const CONTACTS = {
   max: "https://max.ru/id163604335366_biz",
   max_pm: "https://max.ru/u/f9LHodD0cOLr_DCrZ0es-3Cdx5Jctv35W82BgEFzqatYi4n9M9XTfVtEcmQ"
 };
+
 const state = {
   products: [],
   category: "all",
@@ -48,11 +49,131 @@ function escapeHtml(s){
     .replaceAll("'","&#039;");
 }
 
-// ✅ нормализация путей к ассетам
+//нормализация путей
 function toAssetUrl(path){
   if(!path) return "";
   return String(path).startsWith("/") ? String(path).slice(1) : String(path);
 }
+
+function normalizePhoneDigits(s){
+  return String(s || "").replace(/\D/g, "");
+}
+
+function buildProductShareUrl(productId){
+  const base = location.href.split("#")[0];
+  return `${base}#/product/${encodeURIComponent(productId)}`;
+}
+
+function buildOrderMessage(shareUrl){
+  return `Здравствуйте, хотел бы у вас купить ${shareUrl}`;
+}
+
+function buildWhatsAppUrl(phone, message){
+  const digits = normalizePhoneDigits(phone);
+  if(!digits){
+    return CONTACTS.whatsapp;
+  }
+  return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+}
+
+function buildTelegramUrl(telegramUrl, message){
+  if(!telegramUrl) return "";
+  const clean = telegramUrl.replace(/^https?:\/\//, "").replace(/^t\.me\//, "");
+  const username = clean.split(/[/?#]/)[0];
+  if(!username) return telegramUrl;
+  return `https://t.me/${username}?text=${encodeURIComponent(message)}`;
+}
+
+function buildMaxMessengerUrl(product) {
+  const shareUrl = buildProductShareUrl(product.id);
+  const message = buildOrderMessage(shareUrl);
+  return `${CONTACTS.max_pm}?text=${encodeURIComponent(message)}`;
+}
+
+async function copyCurrentProductLink(productId){
+  const url = buildProductShareUrl(productId);
+  await navigator.clipboard.writeText(url);
+  dlgCopyLink.textContent = "Скопировано ✓";
+  setTimeout(() => (dlgCopyLink.textContent = "Скопировать ссылку"), 1200);
+}
+
+function safeImages(arr){
+  const imgs = (arr || []).filter(Boolean);
+  return imgs.length ? imgs : [];
+}
+
+/* меню разделов тлф */
+
+const MOBILE_BP = 980;
+function isMobileLike(){
+  return window.matchMedia(`(max-width:${MOBILE_BP}px)`).matches;
+}
+
+function ensureMobileCategoryToggle(){
+  const header = document.querySelector(".header");
+  const headerInner = document.querySelector(".header__inner");
+  const nav = document.querySelector(".nav");
+
+  if(!header || !headerInner || !nav) return;
+
+  // кнопка навигации
+  let btn = document.querySelector(".nav-toggle");
+  if(!btn){
+    btn = document.createElement("button");
+    btn.className = "nav-toggle";
+    btn.type = "button";
+    btn.setAttribute("aria-label", "Открыть разделы");
+    btn.setAttribute("aria-expanded", "false");
+
+    // сама иконка
+    btn.innerHTML = `
+      <svg class="nav-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4.5" y="4.5" width="15" height="15" rx="2.5"></rect>
+        <line x1="8" y1="9" x2="16" y2="9"></line>
+        <line x1="8" y1="12" x2="16" y2="12"></line>
+        <line x1="8" y1="15" x2="16" y2="15"></line>
+      </svg>
+    `;
+
+    headerInner.insertBefore(btn, nav);
+
+    btn.addEventListener("click", () => {
+      const open = header.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    // логика выброса(выхода)
+    nav.addEventListener("click", (e) => {
+      const a = e.target.closest("a");
+      if(!a) return;
+      header.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    });
+
+    document.addEventListener("click", (e) => {
+      if(!header.contains(e.target)){
+        header.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  // На десктопе меню база
+  if(!isMobileLike()){
+    header.classList.remove("is-open");
+    btn.setAttribute("aria-expanded", "false");
+  }
+}
+
+//смены ориентации
+window.addEventListener("resize", ensureMobileCategoryToggle);
+
+
+window.addEventListener("resize", () => {
+  ensureMobileCategoryToggle();
+});
+
+/* логика обработки данных*/
 
 async function loadProducts(){
   const res = await fetch(DATA_URL, { cache: "no-store" });
@@ -60,6 +181,8 @@ async function loadProducts(){
   state.products = await res.json();
   console.log("products loaded:", state.products.length);
 }
+
+/*фильтрации и трассирвка */
 
 function getFiltered(){
   const max = state.maxPrice === "all" ? Infinity : Number(state.maxPrice);
@@ -80,8 +203,22 @@ function getFiltered(){
   });
 }
 
+// цена общая - по возрастанию цена стоит - по убыванию
+function sortByPriceRule(list){
+  const allPrices = state.maxPrice === "all";
+  return list.sort((a, b) => {
+    const pa = Number(a.price || 0);
+    const pb = Number(b.price || 0);
+    return allPrices ? (pa - pb) : (pb - pa);
+  });
+}
+
+/* отрисовка
+*/
+
 function render(){
-  const list = getFiltered();
+  // фильтр + сортировка по правилу
+  const list = sortByPriceRule(getFiltered());
   grid.innerHTML = "";
 
   const catLabel = state.category === "all" ? "Все разделы" : state.category;
@@ -109,7 +246,6 @@ function render(){
       ? `<img class="card__img" src="${cover}" alt="${escapeHtml(title)}" loading="lazy" />`
       : `<div class="placeholder">NO PHOTO</div>`;
 
-    //фото + название + цена
     el.innerHTML = `
       ${mediaHtml}
       <div class="card__body">
@@ -126,7 +262,7 @@ function render(){
   }
 }
 
-
+/* отображение помощники со стороны интерфейса */
 
 function setActivePriceChip(){
   document.querySelectorAll(".chip[data-price]").forEach(btn => {
@@ -151,51 +287,7 @@ function highlightNav(){
   });
 }
 
-function safeImages(arr){
-  const imgs = (arr || []).filter(Boolean);
-  return imgs.length ? imgs : [];
-}
-
-function buildProductShareUrl(productId){
-  const base = location.href.split("#")[0];
-  return `${base}#/product/${encodeURIComponent(productId)}`;
-}
-
-async function copyCurrentProductLink(productId){
-  const url = buildProductShareUrl(productId);
-  await navigator.clipboard.writeText(url);
-  dlgCopyLink.textContent = "Скопировано ✓";
-  setTimeout(() => (dlgCopyLink.textContent = "Скопировать ссылку"), 1200);
-}
-
-function normalizePhoneDigits(s){
-  return String(s || "").replace(/\D/g, "");
-}
-
-function buildOrderMessage(shareUrl){
-  return `Здравствуйте, хотел бы у вас купить ${shareUrl}`;
-}
-
-function buildWhatsAppUrl(phone, message){
-  const digits = normalizePhoneDigits(phone);
-  if(!digits){
-    return CONTACTS.whatsapp;
-  }
-  return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
-}
-function buildMaxMessengerUrl(product) {
-  const shareUrl = buildProductShareUrl(product.id);
-  const message = buildOrderMessage(shareUrl); 
-  return `${CONTACTS.max_pm}?text=${encodeURIComponent(message)}`;
-}
-
-function buildTelegramUrl(telegramUrl, message){
-  if(!telegramUrl) return "";
-  const clean = telegramUrl.replace(/^https?:\/\//, "").replace(/^t\.me\//, "");
-  const username = clean.split(/[/?#]/)[0];
-  if(!username) return telegramUrl;
-  return `https://t.me/${username}?text=${encodeURIComponent(message)}`;
-}
+/* карточки*/
 
 function openProduct(productId){
   const p = state.products.find(x => x.id === productId);
@@ -216,7 +308,6 @@ function openProduct(productId){
     dlgItems.appendChild(li);
   });
 
-  // галерея
   const imgs = safeImages(p.images).map(toAssetUrl);
   dlgThumbs.innerHTML = "";
 
@@ -238,20 +329,17 @@ function openProduct(productId){
       dlgThumbs.appendChild(t);
     });
   } else {
-    // если фото нет — заглушка
     dlgMainImg.src = "";
     dlgMainImg.alt = "";
     dlgMainImg.style.display = "none";
     dlgThumbs.innerHTML = `<div class="muted">Фотографии пока не добавлены.</div>`;
   }
 
-  // ссылки заказа/контактов 
   const shareUrl = buildProductShareUrl(p.id);
   const orderMessage = buildOrderMessage(shareUrl);
 
-  // кнопка заказа ведёт на WhatsApp 
-  dlgOrderLink.href = buildMaxMessengerUrl(p)
-  //dlgOrderLink.href = buildWhatsAppUrl(CONTACTS.phone, orderMessage);
+  // кнопка на соцсети
+  dlgOrderLink.href = buildMaxMessengerUrl(p);
   dlgOrderLink.textContent = "Оформить заказ";
 
   // Телефон
@@ -259,7 +347,6 @@ function openProduct(productId){
   dlgPhone.href = `tel:${CONTACTS.phone.replace(/\s/g, "")}`;
   dlgPhone.style.display = "inline-flex";
 
-  // Instagram
   dlgInstagram.textContent = "Instagram";
   dlgInstagram.href = CONTACTS.instagram;
   dlgInstagram.style.display = "inline-flex";
@@ -269,11 +356,12 @@ function openProduct(productId){
     dlgWhatsapp.href = buildWhatsAppUrl(CONTACTS.phone, orderMessage);
     dlgWhatsapp.style.display = "inline-flex";
   }
-  if (dlgTelegram) {
+  if(dlgTelegram){
     dlgTelegram.textContent = "Telegram";
     dlgTelegram.href = buildTelegramUrl(CONTACTS.telegram, orderMessage);
     dlgTelegram.style.display = "inline-flex";
   }
+
   dlgCopyLink.onclick = () => copyCurrentProductLink(p.id);
 
   if(!dlg.open) dlg.showModal();
@@ -281,8 +369,6 @@ function openProduct(productId){
 
 function closeDialog(){
   if(dlg.open) dlg.close();
-
-  // если закрыл карточку — возвращаемся на список/категорию
   if(location.hash.startsWith("#/product/")){
     location.hash = "#/";
   }
@@ -302,7 +388,8 @@ window.addEventListener("keydown", (e) => {
   if(e.key === "Escape") closeDialog();
 });
 
-// роутинг
+/* ротация */
+
 function applyRoute(){
   const h = location.hash || "#/";
 
@@ -325,6 +412,8 @@ function applyRoute(){
   if(dlg.open) dlg.close();
   render();
 }
+
+// ui
 
 function bindUI(){
   // фильтр цены
@@ -351,12 +440,23 @@ function bindUI(){
 window.addEventListener("hashchange", () => {
   applyRoute();
   highlightNav();
+
+  // если на мобилке открыл меню — после перехода по разделу закрываем
+  const header = document.querySelector(".header");
+  const btn = document.querySelector(".nav-toggle");
+  if(header && btn){
+    header.classList.remove("is-open");
+    btn.setAttribute("aria-expanded", "false");
+  }
 });
+
+/* асинхронная логика */
 
 (async function main(){
   try{
     await loadProducts();
     bindUI();
+    ensureMobileCategoryToggle(); 
     applyRoute();
     highlightNav();
   } catch (e){

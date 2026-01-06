@@ -484,3 +484,195 @@ body{
     grid-template-columns: 1fr;
   }
 }
+
+
+/* mob тут изменяю изображение мобильный гаджет для корректного показа от 4х карточек */
+/* 1) Переупорядочим блоки на мобильных: фильтр сверху, каталог ниже */
+.layout{
+  grid-template-areas: "catalog sidebar";
+}
+.catalog{ grid-area: catalog; }
+.sidebar{ grid-area: sidebar; }
+
+@media (max-width: 980px){
+  .layout{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "sidebar"
+      "catalog";
+  }
+  .sidebar{
+    position: static;
+    top: auto;
+  }
+}
+
+/* 2) На телефонах делаем 4 карточки в ряд */
+@media (max-width: 560px){
+  /* вместо 12-колоночной сетки делаем простую 4-колоночную */
+  .grid{
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  /* отменяем span-логику */
+  .card{
+    grid-column: auto;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  /* картинка на маленьких карточках */
+  .card__img,
+  .placeholder{
+    aspect-ratio: 1 / 1;
+  }
+
+  /* компактнее текст */
+  .card__body{
+    padding: 8px 8px 10px;
+    gap: 4px;
+  }
+
+  .card__title{
+    font-size: 12px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .card__price{
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  /* убираем “прыжки” от hover на тач-устройствах */
+  .card:hover{
+    transform: none;
+    box-shadow: var(--shadow2);
+  }
+}
+
+/* 3) Если экран совсем узкий  тогда 2 в ряд. */
+@media (max-width: 360px){
+  .grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* изменяем текст на мобильных */
+@media (max-width: 560px){
+
+  body{
+    font-size: 13px;
+  }
+
+  .card__title{
+    font-size: 11.5px;
+    line-height: 1.25;
+    font-weight: 600;
+  }
+
+  .card__price,
+  .price{
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .chip{
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+
+  .panel__help,
+  .panel__meta,
+  .muted{
+    font-size: 11px;
+  }
+
+  .search__input{
+    font-size: 13px;
+    padding: 9px 10px;
+  }
+}
+/* чипы */
+.chip{
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* На мобильных — ограничиваем ширину, чтобы не ломали сетку */
+@media (max-width: 560px){
+  .chip{
+    max-width: 140px;
+  }
+}
+/* =========================
+   Mobile/Tablet NAV button (icon in frame)
+   ========================= */
+
+.nav-toggle{
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(62,67,73,.18);
+  background: rgba(255,255,255,.55);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex: 0 0 auto;
+}
+
+.nav-toggle:hover{
+  border-color: rgba(62,67,73,.35);
+}
+
+.nav-toggle__icon{
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: rgba(62,67,73,.92);
+  stroke-width: 2.2;          /* "толстые" линии */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Включаем кнопку и делаем выпадающее меню на моб/планшетах */
+@media (max-width: 780px){
+  .nav-toggle{ display: inline-flex; }
+
+  /* nav прячем по умолчанию */
+  .nav{
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 16px;
+    right: 16px;
+    padding: 12px;
+    border-radius: calc(var(--radius) + 6px);
+    background: rgba(255,255,255,.92);
+    border: 1px solid rgba(62,67,73,.18);
+    box-shadow: var(--shadow);
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* открыто */
+  .header.is-open .nav{
+    display: flex;
+  }
+
+  /* чтобы меню позиционировалось относительно шапки */
+  .header__inner{
+    position: relative;
+  }
+
+  .nav__link{
+    width: 100%;
+    text-align: center;
+    padding: 12px 12px;
+    font-weight: 700;
+  }
+}
