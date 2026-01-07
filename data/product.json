@@ -799,5 +799,63 @@
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
     "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-041",
+    "title": "Розы Explorer — монобукет (№41)",
+    "category": "mono",
+    "categoryLabel": "Монобукеты",
+    "price": 3500,
+    "description": "Элегантный монобукет из 15 роз Explorer в единой цветовой гамме. Идеальный выбор для торжественных случаев.",
+    "items": [
+      "Роза Explorer"
+    ],
+    "images": [
+      "images/bouquets/cmp-041.jpg",
+      "images/bouquets/cmp-041_1.jpg",
+      "images/bouquets/cmp-041_2.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-042",
+    "title": "Розы Кэндилайт — монобукет (№42)",
+    "category": "mono",
+    "categoryLabel": "Монобукеты",
+    "price": 3500,
+    "description": "Крупные кремовые розы с нежным розовым румянцем. Теплый и элегантный подарок, наполненный светом и нежностью.",
+    "items": [
+      "Роза Кэндилайт"
+    ],
+    "images": [
+      "images/bouquets/cmp-042.jpg",
+      "images/bouquets/cmp-042_1.jpg",
+      "images/bouquets/cmp-042_2.jpg",
+      "images/bouquets/cmp-042_3.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-043",
+    "title": "Розы Pink Mondial — монобукет (№43)",
+    "category": "mono",
+    "categoryLabel": "Монобукеты",
+    "price": 3500,
+    "description": "Нежные розы Pink Mondial классического чайного оттенка. Символ элегантности, восхищения и гармонии для особенного момента.",
+    "items": [
+      "Роза Pink Mondial"
+    ],
+    "images": [
+      "images/bouquets/cmp-043.jpg",
+      "images/bouquets/cmp-043_1.jpg",
+      "images/bouquets/cmp-043_2.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
   }
 ]
