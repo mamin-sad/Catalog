@@ -911,14 +911,13 @@ body {
 @media (min-width: 981px) {
   .gallery__main {
     aspect-ratio: 9 / 16;
-    /* FIXED: Изменил aspect-ratio с 9 / 12 на 9 / 16 для вертикальных фото */
-    padding: 30px;
-    /* FIXED: Увеличил padding для создания боковых полей 10-15% */
-    max-height: 75vh;
-    /* FIXED: Добавил ограничение по высоте для предотвращения скролла */
+    padding: 15px;
+    max-height: 85vh;
+    object-fit: contain;
   }
 
   .dialog__body {
     grid-template-columns: 2fr 1fr;
+    gap: 20px;
   }
 }
