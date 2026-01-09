@@ -906,11 +906,37 @@ body {
 /* Десктопная оптимизация для больших экранов */
 @media (min-width: 981px) {
   .gallery__main {
-    aspect-ratio: 9 / 12;
+    aspect-ratio: 9 / 14;
     padding: 10px;
   }
 
   .dialog__body {
     grid-template-columns: 2fr 1fr;
+  }
+
+  /* Изменения для устранения вертикального скролла */
+  .dialog {
+    max-height: 90vh;
+    overflow: hidden;
+  }
+
+  .dialog__body {
+    max-height: calc(90vh - 70px);
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+  .dialog__body::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .dialog__body::-webkit-scrollbar-track {
+    background: rgba(152, 175, 162, .1);
+    border-radius: 3px;
+  }
+
+  .dialog__body::-webkit-scrollbar-thumb {
+    background: rgba(152, 175, 162, .4);
+    border-radius: 3px;
   }
 }
