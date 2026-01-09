@@ -856,5 +856,113 @@
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
     "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-100",
+    "title": "С Днём Рождения",
+    "category": "postcards",
+    "categoryLabel": "Открытки",
+    "price": 10,
+    "description": "Размер открытки: 7,5см на 10,5см. *Наличие определнной открытки уточнять у флориста.*",
+    "items": [
+      "Открытка"
+    ],
+    "images": [
+      "images/postcards/cmp-100.jpg",
+      "images/postcards/cmp-100_1.jpg",
+      "images/postcards/cmp-100_2.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-101",
+    "title": "LOVE",
+    "category": "postcards",
+    "categoryLabel": "Открытки",
+    "price": 10,
+    "description": "Размер открытки: 7,5см на 7,5см. *Наличие определнной открытки уточнять у флориста.*",
+    "items": [
+      "Открытка"
+    ],
+    "images": [
+      "images/postcards/cmp-101.jpg",
+      "images/postcards/cmp-101_1.jpg",
+      "images/postcards/cmp-101_2.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-102",
+    "title": "Любимой Маме",
+    "category": "postcards",
+    "categoryLabel": "Открытки",
+    "price": 10,
+    "description": "Размер открытки: 7см на 10см. *Наличие определнной открытки уточнять у флориста.*",
+    "items": [
+      "Открытка"
+    ],
+    "images": [
+      "images/postcards/cmp-102.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-103",
+    "title": "Мотивационные",
+    "category": "postcards",
+    "categoryLabel": "Открытки",
+    "price": 10,
+    "description": "Размер открытки: 5см на 7см. *Наличие определнной открытки уточнять у флориста.*",
+    "items": [
+      "Открытка"
+    ],
+    "images": [
+      "images/postcards/cmp-103.jpg",
+      "images/postcards/cmp-103_1.jpg",
+      "images/postcards/cmp-103_2.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-104",
+    "title": "Аффирмация",
+    "category": "postcards",
+    "categoryLabel": "Открытки",
+    "price": 10,
+    "description": "Размер открытки: 5см на 7см. *Наличие определнной открытки уточнять у флориста.*",
+    "items": [
+      "Открытка"
+    ],
+    "images": [
+      "images/postcards/cmp-104.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-105",
+    "title": "С пожеланиями",
+    "category": "postcards",
+    "categoryLabel": "Открытки",
+    "price": 10,
+    "description": "Размер открытки: 5см на 7см. *Наличие определнной открытки уточнять у флориста.*",
+    "items": [
+      "Открытка"
+    ],
+    "images": [
+      "images/postcards/cmp-105.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
   }
 ]
