@@ -361,11 +361,15 @@ body {
   border-radius: var(--radius);
   border: 1px solid rgba(62, 67, 73, .18);
   background: rgba(152, 175, 162, .18);
-  aspect-ratio: 9 / 13;
+  aspect-ratio: 9 / 16;
+  /* FIXED: Изменил aspect-ratio с 9 / 13 на 9 / 16 для вертикальных фото */
   object-fit: contain;
-  padding: 8px;
+  padding: 30px;
+  /* FIXED: Увеличил padding для создания боковых полей */
   box-sizing: border-box;
   max-width: 100%;
+  max-height: 75vh;
+  /* FIXED: Добавил max-height для предотвращения скролла */
 }
 
 .gallery__thumbs {
@@ -906,37 +910,15 @@ body {
 /* Десктопная оптимизация для больших экранов */
 @media (min-width: 981px) {
   .gallery__main {
-    aspect-ratio: 9 / 14;
-    padding: 10px;
+    aspect-ratio: 9 / 16;
+    /* FIXED: Изменил aspect-ratio с 9 / 12 на 9 / 16 для вертикальных фото */
+    padding: 30px;
+    /* FIXED: Увеличил padding для создания боковых полей 10-15% */
+    max-height: 75vh;
+    /* FIXED: Добавил ограничение по высоте для предотвращения скролла */
   }
 
   .dialog__body {
     grid-template-columns: 2fr 1fr;
-  }
-
-  /* Изменения для устранения вертикального скролла */
-  .dialog {
-    max-height: 90vh;
-    overflow: hidden;
-  }
-
-  .dialog__body {
-    max-height: calc(90vh - 70px);
-    overflow-y: auto;
-    padding-right: 8px;
-  }
-
-  .dialog__body::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .dialog__body::-webkit-scrollbar-track {
-    background: rgba(152, 175, 162, .1);
-    border-radius: 3px;
-  }
-
-  .dialog__body::-webkit-scrollbar-thumb {
-    background: rgba(152, 175, 162, .4);
-    border-radius: 3px;
   }
 }
