@@ -936,7 +936,7 @@ body {
 }
 @media (min-width: 981px){
   .gallery__main{
-    max-height: 80vh;          
+    max-height: 75vh;          
     object-fit: cover;        
     object-position: center;  /* центр */
     padding: 0;               /* выыкл рамок */
