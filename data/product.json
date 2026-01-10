@@ -13,7 +13,9 @@
       "Самшит"
     ],
     "images": [
-      "images/bouquets/cmp-001.jpg"
+      "images/bouquets/cmp-001.jpg",
+      "images/bouquets/cmp-001_1.jpg",
+      "images/bouquets/cmp-001_2.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
@@ -96,7 +98,8 @@
       "Лагурус"
     ],
     "images": [
-      "images/bouquets/cmp-005.jpg"
+      "images/bouquets/cmp-005.jpg",
+      "images/bouquets/cmp-005_1.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
@@ -491,7 +494,9 @@
       "Самшит"
     ],
     "images": [
-      "images/baskets/cmp-024.jpg"
+      "images/baskets/cmp-024.jpg",
+      "images/baskets/cmp-024_1.jpg",
+      "images/baskets/cmp-024_2.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
@@ -548,7 +553,9 @@
       "Лимониум"
     ],
     "images": [
-      "images/baskets/cmp-027.jpg"
+      "images/baskets/cmp-027.jpg",
+      "images/baskets/cmp-027_1.jpg",
+      "images/baskets/cmp-027_2.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
@@ -615,7 +622,9 @@
       "Гортензия сухоцвет"
     ],
     "images": [
-      "images/baskets/cmp-030.jpg"
+      "images/baskets/cmp-030.jpg",
+      "images/baskets/cmp-030_1.jpg",
+      "images/baskets/cmp-030_2.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
@@ -653,7 +662,8 @@
       "Гвоздика кустовая"
     ],
     "images": [
-      "images/baskets/cmp-032.jpg"
+      "images/baskets/cmp-032.jpg",
+      "images/baskets/cmp-032_1.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
@@ -853,6 +863,24 @@
       "images/mono/cmp-043.jpg",
       "images/mono/cmp-043_1.jpg",
       "images/mono/cmp-043_2.jpg"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-044",
+    "title": "Хризантемы Сантини — монобукет (№44)",
+    "category": "mono",
+    "categoryLabel": "Монобукеты",
+    "price": 3750,
+    "description": "Пышный монобукет из нежных хризантем Сантини. Символ радости, долголетия и искренних чувств, идеально подходящий для создания тёплой атмосферы.",
+    "items": [
+      "Хризантема Сантини"
+    ],
+    "images": [
+      "images/mono/cmp-044.jpg",
+      "images/mono/cmp-044_1.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
