@@ -192,10 +192,6 @@ function getFiltered() {
     const okCategory = state.category === "all" ? true : p.category === state.category;
     const okPrice = Number(p.price) <= max;
 
-    // Исключаем открытки при фильтре "все цены"
-    const isPostcardInAllPrices = (state.maxPrice === "all" && p.category === "postcards");
-    if (isPostcardInAllPrices) return false;
-
     const hay = (
       (p.title || "") + " " +
       (p.description || "") + " " +
@@ -203,7 +199,10 @@ function getFiltered() {
     ).toLowerCase();
 
     const okQ = q ? hay.includes(q) : true;
-    return okCategory && okPrice && okQ;
+
+    const excludePostcards = state.category === "all" && p.category === "postcards";
+
+    return okCategory && okPrice && okQ && !excludePostcards;
   });
 }
 
