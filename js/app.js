@@ -11,7 +11,7 @@ const CONTACTS = {
 const state = {
   products: [],
   category: "all",
-  maxPrice: "all",
+  priceFilter: "all",
   q: ""
 };
 
@@ -185,12 +185,29 @@ async function loadProducts() {
 /*фильтрации и трассирвка */
 
 function getFiltered() {
-  const max = state.maxPrice === "all" ? Infinity : Number(state.maxPrice);
   const q = state.q.trim().toLowerCase();
 
   return state.products.filter(p => {
     const okCategory = state.category === "all" ? true : p.category === state.category;
-    const okPrice = Number(p.price) <= max;
+
+    const price = Number(p.price);
+    let okPrice = true;
+
+    if (state.priceFilter !== "all") {
+      const filter = state.priceFilter;
+
+      if (filter === "0-1500") {
+        okPrice = price <= 1500;
+      } else if (filter === "1500-2500") {
+        okPrice = price >= 1500 && price <= 2500;
+      } else if (filter === "2500-3500") {
+        okPrice = price >= 2500 && price <= 3500;
+      } else if (filter === "3500-5000") {
+        okPrice = price >= 3500 && price <= 5000;
+      } else if (filter === "5000-inf") {
+        okPrice = price >= 5000;
+      }
+    }
 
     const hay = (
       (p.title || "") + " " +
@@ -208,7 +225,7 @@ function getFiltered() {
 
 // цена общая - по возрастанию цена стоит - по убыванию
 function sortByPriceRule(list) {
-  const allPrices = state.maxPrice === "all";
+  const allPrices = state.priceFilter === "all";
   return list.sort((a, b) => {
     const pa = Number(a.price || 0);
     const pb = Number(b.price || 0);
@@ -225,7 +242,17 @@ function render() {
   grid.innerHTML = "";
 
   const catLabel = state.category === "all" ? "Все разделы" : state.category;
-  const priceLabel = state.maxPrice === "all" ? "любая цена" : `до ${formatRub(Number(state.maxPrice))}`;
+  let priceLabel = "любая цена";
+
+  if (state.priceFilter !== "all") {
+    const filter = state.priceFilter;
+    if (filter === "0-1500") priceLabel = "до 1 500 ₽";
+    else if (filter === "1500-2500") priceLabel = "1 500–2 500 ₽";
+    else if (filter === "2500-3500") priceLabel = "2 500–3 500 ₽";
+    else if (filter === "3500-5000") priceLabel = "3 500–5 000 ₽";
+    else if (filter === "5000-inf") priceLabel = "от 5 000 ₽";
+  }
+
   resultMeta.textContent = `Показано: ${list.length} • Раздел: ${catLabel} • Цена: ${priceLabel}`;
 
   if (list.length === 0) {
@@ -270,7 +297,7 @@ function render() {
 function setActivePriceChip() {
   document.querySelectorAll(".chip[data-price]").forEach(btn => {
     const val = btn.getAttribute("data-price");
-    btn.classList.toggle("is-active", String(state.maxPrice) === String(val));
+    btn.classList.toggle("is-active", String(state.priceFilter) === String(val));
   });
 }
 
@@ -422,7 +449,7 @@ function bindUI() {
   // фильтр цены
   document.querySelectorAll(".chip[data-price]").forEach(btn => {
     btn.addEventListener("click", () => {
-      state.maxPrice = btn.getAttribute("data-price");
+      state.priceFilter = btn.getAttribute("data-price");
       setActivePriceChip();
       render();
     });
