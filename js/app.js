@@ -36,51 +36,51 @@ const dlgTelegram = document.getElementById("dlgTelegram");
 const dlgInstagram = document.getElementById("dlgInstagram");
 const dlgWhatsapp = document.getElementById("dlgWhatsapp");
 
-function formatRub(n){
+function formatRub(n) {
   return new Intl.NumberFormat("ru-RU").format(n) + " ₽";
 }
 
-function escapeHtml(s){
+function escapeHtml(s) {
   return String(s)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 //нормализация путей
-function toAssetUrl(path){
-  if(!path) return "";
+function toAssetUrl(path) {
+  if (!path) return "";
   return String(path).startsWith("/") ? String(path).slice(1) : String(path);
 }
 
-function normalizePhoneDigits(s){
+function normalizePhoneDigits(s) {
   return String(s || "").replace(/\D/g, "");
 }
 
-function buildProductShareUrl(productId){
+function buildProductShareUrl(productId) {
   const base = location.href.split("#")[0];
   return `${base}#/product/${encodeURIComponent(productId)}`;
 }
 
-function buildOrderMessage(shareUrl){
+function buildOrderMessage(shareUrl) {
   return `Здравствуйте, хотел бы у вас купить ${shareUrl}`;
 }
 
-function buildWhatsAppUrl(phone, message){
+function buildWhatsAppUrl(phone, message) {
   const digits = normalizePhoneDigits(phone);
-  if(!digits){
+  if (!digits) {
     return CONTACTS.whatsapp;
   }
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
 }
 
-function buildTelegramUrl(telegramUrl, message){
-  if(!telegramUrl) return "";
+function buildTelegramUrl(telegramUrl, message) {
+  if (!telegramUrl) return "";
   const clean = telegramUrl.replace(/^https?:\/\//, "").replace(/^t\.me\//, "");
   const username = clean.split(/[/?#]/)[0];
-  if(!username) return telegramUrl;
+  if (!username) return telegramUrl;
   return `https://t.me/${username}?text=${encodeURIComponent(message)}`;
 }
 
@@ -90,14 +90,14 @@ function buildMaxMessengerUrl(product) {
   return `${CONTACTS.max_pm}?text=${encodeURIComponent(message)}`;
 }
 
-async function copyCurrentProductLink(productId){
+async function copyCurrentProductLink(productId) {
   const url = buildProductShareUrl(productId);
   await navigator.clipboard.writeText(url);
   dlgCopyLink.textContent = "Скопировано ✓";
   setTimeout(() => (dlgCopyLink.textContent = "Скопировать ссылку"), 1200);
 }
 
-function safeImages(arr){
+function safeImages(arr) {
   const imgs = (arr || []).filter(Boolean);
   return imgs.length ? imgs : [];
 }
@@ -105,20 +105,20 @@ function safeImages(arr){
 /* меню разделов тлф */
 
 const MOBILE_BP = 980;
-function isMobileLike(){
+function isMobileLike() {
   return window.matchMedia(`(max-width:${MOBILE_BP}px)`).matches;
 }
 
-function ensureMobileCategoryToggle(){
+function ensureMobileCategoryToggle() {
   const header = document.querySelector(".header");
   const headerInner = document.querySelector(".header__inner");
   const nav = document.querySelector(".nav");
 
-  if(!header || !headerInner || !nav) return;
+  if (!header || !headerInner || !nav) return;
 
   // кнопка навигации
   let btn = document.querySelector(".nav-toggle");
-  if(!btn){
+  if (!btn) {
     btn = document.createElement("button");
     btn.className = "nav-toggle";
     btn.type = "button";
@@ -145,13 +145,13 @@ function ensureMobileCategoryToggle(){
     // логика выброса(выхода)
     nav.addEventListener("click", (e) => {
       const a = e.target.closest("a");
-      if(!a) return;
+      if (!a) return;
       header.classList.remove("is-open");
       btn.setAttribute("aria-expanded", "false");
     });
 
     document.addEventListener("click", (e) => {
-      if(!header.contains(e.target)){
+      if (!header.contains(e.target)) {
         header.classList.remove("is-open");
         btn.setAttribute("aria-expanded", "false");
       }
@@ -159,7 +159,7 @@ function ensureMobileCategoryToggle(){
   }
 
   // На десктопе меню база
-  if(!isMobileLike()){
+  if (!isMobileLike()) {
     header.classList.remove("is-open");
     btn.setAttribute("aria-expanded", "false");
   }
@@ -175,22 +175,26 @@ window.addEventListener("resize", () => {
 
 /* логика обработки данных*/
 
-async function loadProducts(){
+async function loadProducts() {
   const res = await fetch(DATA_URL, { cache: "no-store" });
-  if(!res.ok) throw new Error(`Не удалось загрузить ${DATA_URL}. HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`Не удалось загрузить ${DATA_URL}. HTTP ${res.status}`);
   state.products = await res.json();
   console.log("products loaded:", state.products.length);
 }
 
 /*фильтрации и трассирвка */
 
-function getFiltered(){
+function getFiltered() {
   const max = state.maxPrice === "all" ? Infinity : Number(state.maxPrice);
   const q = state.q.trim().toLowerCase();
 
   return state.products.filter(p => {
     const okCategory = state.category === "all" ? true : p.category === state.category;
     const okPrice = Number(p.price) <= max;
+
+    // Исключаем открытки при фильтре "все цены"
+    const isPostcardInAllPrices = (state.maxPrice === "all" && p.category === "postcards");
+    if (isPostcardInAllPrices) return false;
 
     const hay = (
       (p.title || "") + " " +
@@ -204,7 +208,7 @@ function getFiltered(){
 }
 
 // цена общая - по возрастанию цена стоит - по убыванию
-function sortByPriceRule(list){
+function sortByPriceRule(list) {
   const allPrices = state.maxPrice === "all";
   return list.sort((a, b) => {
     const pa = Number(a.price || 0);
@@ -216,7 +220,7 @@ function sortByPriceRule(list){
 /* отрисовка
 */
 
-function render(){
+function render() {
   // фильтр + сортировка по правилу
   const list = sortByPriceRule(getFiltered());
   grid.innerHTML = "";
@@ -225,7 +229,7 @@ function render(){
   const priceLabel = state.maxPrice === "all" ? "любая цена" : `до ${formatRub(Number(state.maxPrice))}`;
   resultMeta.textContent = `Показано: ${list.length} • Раздел: ${catLabel} • Цена: ${priceLabel}`;
 
-  if(list.length === 0){
+  if (list.length === 0) {
     grid.innerHTML = `<div class="card" style="grid-column: span 12; cursor: default;">
       <div class="card__body">
         <h3 class="card__title">Ничего не найдено</h3>
@@ -235,7 +239,7 @@ function render(){
     return;
   }
 
-  for(const p of list){
+  for (const p of list) {
     const cover = (p.images && p.images[0]) ? toAssetUrl(p.images[0]) : "";
     const title = p.title || "Без названия";
 
@@ -264,20 +268,20 @@ function render(){
 
 /* отображение помощники со стороны интерфейса */
 
-function setActivePriceChip(){
+function setActivePriceChip() {
   document.querySelectorAll(".chip[data-price]").forEach(btn => {
     const val = btn.getAttribute("data-price");
     btn.classList.toggle("is-active", String(state.maxPrice) === String(val));
   });
 }
 
-function highlightNav(){
+function highlightNav() {
   const h = location.hash || "#/";
   const cat = (h.match(/^#\/category\/([^/]+)$/)?.[1]) || "all";
 
   document.querySelectorAll(".nav__link").forEach(a => {
     const v = a.getAttribute("data-category");
-    if(v === decodeURIComponent(cat)){
+    if (v === decodeURIComponent(cat)) {
       a.style.boxShadow = "0 0 0 5px rgba(152,175,162,.22)";
       a.style.borderColor = "rgba(152,175,162,.95)";
     } else {
@@ -289,9 +293,9 @@ function highlightNav(){
 
 /* карточки*/
 
-function openProduct(productId){
+function openProduct(productId) {
   const p = state.products.find(x => x.id === productId);
-  if(!p){
+  if (!p) {
     location.hash = "#/";
     return;
   }
@@ -311,7 +315,7 @@ function openProduct(productId){
   const imgs = safeImages(p.images).map(toAssetUrl);
   dlgThumbs.innerHTML = "";
 
-  if(imgs.length){
+  if (imgs.length) {
     dlgMainImg.style.display = "block";
     dlgMainImg.src = imgs[0];
     dlgMainImg.alt = p.title || "";
@@ -320,7 +324,7 @@ function openProduct(productId){
       const t = document.createElement("button");
       t.type = "button";
       t.className = "thumb" + (idx === 0 ? " is-active" : "");
-      t.innerHTML = `<img src="${src}" alt="${escapeHtml(p.title)} — фото ${idx+1}" loading="lazy" />`;
+      t.innerHTML = `<img src="${src}" alt="${escapeHtml(p.title)} — фото ${idx + 1}" loading="lazy" />`;
       t.addEventListener("click", () => {
         dlgMainImg.src = src;
         dlgThumbs.querySelectorAll(".thumb").forEach(x => x.classList.remove("is-active"));
@@ -351,12 +355,12 @@ function openProduct(productId){
   dlgInstagram.href = CONTACTS.instagram;
   dlgInstagram.style.display = "inline-flex";
 
-  if(dlgWhatsapp){
+  if (dlgWhatsapp) {
     dlgWhatsapp.textContent = "WhatsApp";
     dlgWhatsapp.href = buildWhatsAppUrl(CONTACTS.phone, orderMessage);
     dlgWhatsapp.style.display = "inline-flex";
   }
-  if(dlgTelegram){
+  if (dlgTelegram) {
     dlgTelegram.textContent = "Telegram";
     dlgTelegram.href = buildTelegramUrl(CONTACTS.telegram, orderMessage);
     dlgTelegram.style.display = "inline-flex";
@@ -364,12 +368,12 @@ function openProduct(productId){
 
   dlgCopyLink.onclick = () => copyCurrentProductLink(p.id);
 
-  if(!dlg.open) dlg.showModal();
+  if (!dlg.open) dlg.showModal();
 }
 
-function closeDialog(){
-  if(dlg.open) dlg.close();
-  if(location.hash.startsWith("#/product/")){
+function closeDialog() {
+  if (dlg.open) dlg.close();
+  if (location.hash.startsWith("#/product/")) {
     location.hash = "#/";
   }
 }
@@ -382,40 +386,40 @@ dlg.addEventListener("click", (e) => {
     e.clientX >= rect.left && e.clientX <= rect.right &&
     e.clientY >= rect.top && e.clientY <= rect.bottom;
 
-  if(!inDialog) closeDialog();
+  if (!inDialog) closeDialog();
 });
 window.addEventListener("keydown", (e) => {
-  if(e.key === "Escape") closeDialog();
+  if (e.key === "Escape") closeDialog();
 });
 
 /* ротация */
 
-function applyRoute(){
+function applyRoute() {
   const h = location.hash || "#/";
 
   const catMatch = h.match(/^#\/category\/([^/]+)$/);
-  if(catMatch){
+  if (catMatch) {
     state.category = decodeURIComponent(catMatch[1]);
-    if(dlg.open) dlg.close();
+    if (dlg.open) dlg.close();
     render();
     return;
   }
 
   const prodMatch = h.match(/^#\/product\/([^/]+)$/);
-  if(prodMatch){
+  if (prodMatch) {
     const id = decodeURIComponent(prodMatch[1]);
     openProduct(id);
     return;
   }
 
   state.category = "all";
-  if(dlg.open) dlg.close();
+  if (dlg.open) dlg.close();
   render();
 }
 
 // ui
 
-function bindUI(){
+function bindUI() {
   // фильтр цены
   document.querySelectorAll(".chip[data-price]").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -444,7 +448,7 @@ window.addEventListener("hashchange", () => {
   // если на мобилке открыл меню — после перехода по разделу закрываем
   const header = document.querySelector(".header");
   const btn = document.querySelector(".nav-toggle");
-  if(header && btn){
+  if (header && btn) {
     header.classList.remove("is-open");
     btn.setAttribute("aria-expanded", "false");
   }
@@ -452,14 +456,14 @@ window.addEventListener("hashchange", () => {
 
 /* асинхронная логика */
 
-(async function main(){
-  try{
+(async function main() {
+  try {
     await loadProducts();
     bindUI();
-    ensureMobileCategoryToggle(); 
+    ensureMobileCategoryToggle();
     applyRoute();
     highlightNav();
-  } catch (e){
+  } catch (e) {
     console.error(e);
     const root = document.querySelector("#catalog") || document.body;
     const msg = document.createElement("div");
