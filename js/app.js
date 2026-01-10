@@ -12,7 +12,8 @@ const state = {
   products: [],
   category: "all",
   priceFilter: "all",
-  q: ""
+  q: "",
+  lastValidHash: "#/"
 };
 
 const grid = document.getElementById("grid");
@@ -49,7 +50,6 @@ function escapeHtml(s) {
     .replaceAll("'", "&#039;");
 }
 
-//нормализация путей
 function toAssetUrl(path) {
   if (!path) return "";
   return String(path).startsWith("/") ? String(path).slice(1) : String(path);
@@ -102,8 +102,6 @@ function safeImages(arr) {
   return imgs.length ? imgs : [];
 }
 
-/* меню разделов тлф */
-
 const MOBILE_BP = 980;
 function isMobileLike() {
   return window.matchMedia(`(max-width:${MOBILE_BP}px)`).matches;
@@ -116,7 +114,6 @@ function ensureMobileCategoryToggle() {
 
   if (!header || !headerInner || !nav) return;
 
-  // кнопка навигации
   let btn = document.querySelector(".nav-toggle");
   if (!btn) {
     btn = document.createElement("button");
@@ -125,7 +122,6 @@ function ensureMobileCategoryToggle() {
     btn.setAttribute("aria-label", "Открыть разделы");
     btn.setAttribute("aria-expanded", "false");
 
-    // сама иконка
     btn.innerHTML = `
       <svg class="nav-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
         <rect x="4.5" y="4.5" width="15" height="15" rx="2.5"></rect>
@@ -142,7 +138,6 @@ function ensureMobileCategoryToggle() {
       btn.setAttribute("aria-expanded", open ? "true" : "false");
     });
 
-    // логика выброса(выхода)
     nav.addEventListener("click", (e) => {
       const a = e.target.closest("a");
       if (!a) return;
@@ -158,22 +153,13 @@ function ensureMobileCategoryToggle() {
     });
   }
 
-  // На десктопе меню база
   if (!isMobileLike()) {
     header.classList.remove("is-open");
     btn.setAttribute("aria-expanded", "false");
   }
 }
 
-//смены ориентации
 window.addEventListener("resize", ensureMobileCategoryToggle);
-
-
-window.addEventListener("resize", () => {
-  ensureMobileCategoryToggle();
-});
-
-/* логика обработки данных*/
 
 async function loadProducts() {
   const res = await fetch(DATA_URL, { cache: "no-store" });
@@ -181,8 +167,6 @@ async function loadProducts() {
   state.products = await res.json();
   console.log("products loaded:", state.products.length);
 }
-
-/*фильтрации и трассирвка */
 
 function getFiltered() {
   const q = state.q.trim().toLowerCase();
@@ -223,7 +207,6 @@ function getFiltered() {
   });
 }
 
-// цена общая - по возрастанию цена стоит - по убыванию
 function sortByPriceRule(list) {
   const allPrices = state.priceFilter === "all";
   return list.sort((a, b) => {
@@ -233,11 +216,7 @@ function sortByPriceRule(list) {
   });
 }
 
-/* отрисовка
-*/
-
 function render() {
-  // фильтр + сортировка по правилу
   const list = sortByPriceRule(getFiltered());
   grid.innerHTML = "";
 
@@ -292,8 +271,6 @@ function render() {
   }
 }
 
-/* отображение помощники со стороны интерфейса */
-
 function setActivePriceChip() {
   document.querySelectorAll(".chip[data-price]").forEach(btn => {
     const val = btn.getAttribute("data-price");
@@ -316,8 +293,6 @@ function highlightNav() {
     }
   });
 }
-
-/* карточки*/
 
 function openProduct(productId) {
   const p = state.products.find(x => x.id === productId);
@@ -368,11 +343,9 @@ function openProduct(productId) {
   const shareUrl = buildProductShareUrl(p.id);
   const orderMessage = buildOrderMessage(shareUrl);
 
-  // кнопка на соцсети
   dlgOrderLink.href = buildMaxMessengerUrl(p);
   dlgOrderLink.textContent = "Оформить заказ";
 
-  // Телефон
   dlgPhone.textContent = "Позвонить";
   dlgPhone.href = `tel:${CONTACTS.phone.replace(/\s/g, "")}`;
   dlgPhone.style.display = "inline-flex";
@@ -400,11 +373,10 @@ function openProduct(productId) {
 function closeDialog() {
   if (dlg.open) dlg.close();
   if (location.hash.startsWith("#/product/")) {
-    location.hash = "#/";
+    location.hash = state.lastValidHash || "#/";
   }
 }
 
-// закрытие
 dlgClose.addEventListener("click", closeDialog);
 dlg.addEventListener("click", (e) => {
   const rect = dlg.getBoundingClientRect();
@@ -418,14 +390,13 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeDialog();
 });
 
-/* ротация */
-
 function applyRoute() {
   const h = location.hash || "#/";
 
   const catMatch = h.match(/^#\/category\/([^/]+)$/);
   if (catMatch) {
     state.category = decodeURIComponent(catMatch[1]);
+    state.lastValidHash = h;
     if (dlg.open) dlg.close();
     render();
     return;
@@ -438,15 +409,16 @@ function applyRoute() {
     return;
   }
 
+  if (h === "#/") {
+    state.lastValidHash = "#/";
+  }
+
   state.category = "all";
   if (dlg.open) dlg.close();
   render();
 }
 
-// ui
-
 function bindUI() {
-  // фильтр цены
   document.querySelectorAll(".chip[data-price]").forEach(btn => {
     btn.addEventListener("click", () => {
       state.priceFilter = btn.getAttribute("data-price");
@@ -456,7 +428,6 @@ function bindUI() {
   });
   setActivePriceChip();
 
-  // поиск
   let t = null;
   searchInput.addEventListener("input", () => {
     clearTimeout(t);
@@ -471,7 +442,6 @@ window.addEventListener("hashchange", () => {
   applyRoute();
   highlightNav();
 
-  // если на мобилке открыл меню — после перехода по разделу закрываем
   const header = document.querySelector(".header");
   const btn = document.querySelector(".nav-toggle");
   if (header && btn) {
@@ -479,8 +449,6 @@ window.addEventListener("hashchange", () => {
     btn.setAttribute("aria-expanded", "false");
   }
 });
-
-/* асинхронная логика */
 
 (async function main() {
   try {
