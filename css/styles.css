@@ -934,3 +934,11 @@ body {
     overflow: auto;
   }
 }
+@media (min-width: 981px){
+  .gallery__main{
+    max-height: 75vh;          
+    object-fit: cover;        
+    object-position: center top;  /* центр верх */
+    padding: 0;               /* выыкл рамок */
+  }
+}
