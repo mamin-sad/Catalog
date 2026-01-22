@@ -172,6 +172,7 @@ function getFiltered() {
   const q = state.q.trim().toLowerCase();
 
   return state.products.filter(p => {
+    if (p.show === false) return false;
     const okCategory = state.category === "all" ? true : p.category === state.category;
 
     const price = Number(p.price);
