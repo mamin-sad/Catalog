@@ -827,8 +827,8 @@
     "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
   },
   {
-    "id": "cmp-041",
-    "title": "Розы Explorer — монобукет (№41)",
+    "id": "cmp-081",
+    "title": "Розы Explorer — монобукет (№81)",
     "category": "mono",
     "categoryLabel": "Монобукеты",
     "price": 3500,
@@ -837,17 +837,41 @@
       "Роза Explorer x 15"
     ],
     "images": [
-      "images/mono/cmp-041.jpg",
-      "images/mono/cmp-041_1.jpg",
-      "images/mono/cmp-041_2.jpg"
+      "images/mono/cmp-081.jpg",
+      "images/mono/cmp-081_1.jpg",
+      "images/mono/cmp-081_2.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
     "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
   },
   {
-    "id": "cmp-042",
-    "title": "Розы Кэндилайт — монобукет (№42)",
+    "id": "cmp-041",
+    "title": "Кустовая роза & Эустома — изысканный комплимент (№41)",
+    "category": "bouquets",
+    "categoryLabel": "Букеты",
+    "price": 3700,
+    "description": "Утонченный букет с кустовыми розами и нежной эустомой, дополненный гвоздикой и воздушным лагурусом. Элегантная композиция для особых поздравлений.",
+    "items": [
+      "Роза Кустовая Импорт",
+      "Гвоздика",
+      "Роза Кэндилайт",
+      "Хризантема Балтик",
+      "Эустома",
+      "Лагурус"
+    ],
+    "images": [
+      "images/bouquets/cmp-041_1.png",
+      "images/bouquets/cmp-041_2.png",
+      "images/bouquets/cmp-041_3.png"
+    ],
+    "phone": "+79274719121",
+    "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
+    "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
+  },
+  {
+    "id": "cmp-082",
+    "title": "Розы Кэндилайт — монобукет (№82)",
     "category": "mono",
     "categoryLabel": "Монобукеты",
     "price": 3500,
@@ -856,17 +880,17 @@
       "Роза Кэндилайт x 15"
     ],
     "images": [
-      "images/mono/cmp-042.jpg",
-      "images/mono/cmp-042_1.jpg",
-      "images/mono/cmp-042_2.jpg"
+      "images/mono/cmp-082.jpg",
+      "images/mono/cmp-082_1.jpg",
+      "images/mono/cmp-082_2.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
     "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
   },
   {
-    "id": "cmp-043",
-    "title": "Розы Pink Mondial — монобукет (№43)",
+    "id": "cmp-083",
+    "title": "Розы Pink Mondial — монобукет (№83)",
     "category": "mono",
     "categoryLabel": "Монобукеты",
     "price": 3500,
@@ -875,17 +899,17 @@
       "Роза Pink Mondial x 15"
     ],
     "images": [
-      "images/mono/cmp-043.jpg",
-      "images/mono/cmp-043_1.jpg",
-      "images/mono/cmp-043_2.jpg"
+      "images/mono/cmp-083.jpg",
+      "images/mono/cmp-083_1.jpg",
+      "images/mono/cmp-083_2.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
     "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
   },
   {
-    "id": "cmp-044",
-    "title": "Хризантемы Сантини — монобукет (№44)",
+    "id": "cmp-084",
+    "title": "Хризантемы Сантини — монобукет (№84)",
     "category": "mono",
     "categoryLabel": "Монобукеты",
     "price": 3750,
@@ -894,16 +918,16 @@
       "Хризантема Сантини x 25"
     ],
     "images": [
-      "images/mono/cmp-044.jpg",
-      "images/mono/cmp-044_1.jpg"
+      "images/mono/cmp-084.jpg",
+      "images/mono/cmp-084_1.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
     "whatsApp": "https://wa.me/message/QA4UW2CU7JN7O1"
   },
   {
-    "id": "cmp-045",
-    "title": "Розы Мандарин — монобукет (№45)",
+    "id": "cmp-085",
+    "title": "Розы Мандарин — монобукет (№85)",
     "category": "mono",
     "categoryLabel": "Монобукеты",
     "price": 3500,
@@ -912,9 +936,9 @@
       "Роза Мандарин x 15"
     ],
     "images": [
-      "images/mono/cmp-045.jpg",
-      "images/mono/cmp-045_1.jpg",
-      "images/mono/cmp-045_2.jpg"
+      "images/mono/cmp-085.jpg",
+      "images/mono/cmp-085_1.jpg",
+      "images/mono/cmp-085_2.jpg"
     ],
     "phone": "+79274719121",
     "instagram": "https://www.instagram.com/mam.insad?igsh=c3g5dnNwYnN3dDc0&utm_source=qr",
